@@ -1,0 +1,86 @@
+﻿<UserControl x:Class="Motio.UI.Views.NodeDisplay"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Motio.UI.Views"
+             mc:Ignorable="d" 
+             Loaded="UserControl_Loaded"
+             d:DesignHeight="300" d:DesignWidth="300">
+<!-- DataContext = NodeViewModel -->
+    
+    <StackPanel>
+        <!-- TODO creer un XAML different pour chaque type de node (graphics, property affecting etc)
+            et comme ca on peut mettre un style different sur chaque node pour que l'user puisse
+            bien differencier les trucs-->
+        <StackPanel Orientation="Horizontal">
+            <!-- TODO trim le milieu du name pour eviter les noms a rallonge -->
+            <Button Focusable="False" 
+                    Style="{StaticResource removeFromProp}"
+                    Margin="3 0 3 0"
+                    VerticalAlignment="Center"
+                    ToolTip="Remove this node from the Property panel"
+                    Click="RemoveFromPropertyPanel_Click"/>
+            <local:IconButton Height="20"
+                              x:Name="LockButton"
+                              VerticalAlignment="Bottom"
+                              Click="LockButton_Click"
+                              Margin="0 0 3 0"
+                              PathData="{Binding DataContext.IsLockedInPropertyPanel, RelativeSource={RelativeSource AncestorType={x:Type StackPanel}}, Converter={StaticResource BoolToPathData}, ConverterParameter='file:Icons/lock_open|file:Icons/lock_closed'}"
+                              PathMargin="2">
+                <local:IconButton.IconBackground>
+                    <MultiBinding Converter="{StaticResource BoolToColorMulti}">
+                        <Binding Path="DataContext.IsLockedInPropertyPanel" RelativeSource="{RelativeSource AncestorType={x:Type StackPanel}}" />
+                        <Binding Source="{StaticResource ButtonColor}"/>
+                        <Binding Source="{StaticResource ButtonDisabledColor}"/>
+                        <Binding Path="DataContext.PropertyPanel.DisplayedLockedNodes.Count" RelativeSource="{RelativeSource AncestorType={x:Type StackPanel}}" />
+                    </MultiBinding>
+                </local:IconButton.IconBackground>
+                <!--<local:IconButton.PathData>
+                    <MultiBinding Converter="{StaticResource BoolToPathDataMulti}" ConverterParameter="file:Icons/lock_open|file:Icons/lock_closed">
+                        <Binding Path="DataContext.IsLockedInPropertyPanel" RelativeSource="{RelativeSource AncestorType={x:Type StackPanel}}" />
+                        <Binding Path="DataContext.PropertyPanel.DisplayedLockedNodes.Count" RelativeSource="{RelativeSource AncestorType={x:Type StackPanel}}" />
+                    </MultiBinding>
+                </local:IconButton.PathData>-->
+            </local:IconButton>
+            <Button Focusable="False"
+                    Margin="0 0 5 0"
+                    VerticalAlignment="Center"
+                    ToolTip="Display this node in the Keyframe view"
+                    Style="{StaticResource addToTLButton}"
+                    Click="AddToTimeline_Click"/>
+            <TextBlock Text="{Binding Path=UserGivenName}" 
+                       ToolTip="{Binding Path=ClassName}" 
+                       Margin="0 0 3 0"
+                       Foreground="{DynamicResource TextColor}" 
+                       VerticalAlignment="Center"
+                       x:Name="NameDisplay">
+                <TextBlock.TextDecorations>
+                    <TextDecoration Location="Underline" PenOffset="2"
+                                    PenThicknessUnit="FontRecommended">
+                        <TextDecoration.Pen>
+                            <Pen Brush="{DynamicResource UnderlineColor}" Thickness="2">
+                                <Pen.DashStyle>
+                                    <DashStyle Dashes="3"/>
+                                </Pen.DashStyle>
+                            </Pen>
+                        </TextDecoration.Pen>
+                    </TextDecoration>
+                </TextBlock.TextDecorations>
+            </TextBlock>
+            
+        </StackPanel>
+
+        <local:NodeToolsDisplay/>
+
+        <ItemsControl ItemsSource="{Binding Path=Properties}" Grid.IsSharedSizeScope="True">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <!-- item template for each property -->
+                    <local:PropertyDisplay Margin="0 1.3"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <Separator/>
+    </StackPanel>
+</UserControl>

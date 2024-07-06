@@ -1,0 +1,73 @@
+﻿<UserControl x:Class="Motio.UI.Views.MainControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Motio.UI.Views"
+             xmlns:cmds="clr-namespace:Motio.UI"
+             Loaded="MainControl_Loaded"
+             Background="{DynamicResource BackgroundColor}"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+
+    <UserControl.CommandBindings>
+        <!-- moved this to KeyDown<CommandBinding Command="cmds:CustomCommands.PlayPause" CanExecute="PlayPause_CanExecute" Executed="PlayPause_Executed"/>-->
+        <!--<CommandBinding Command="cmds:CustomCommands.SwitchKeyframeClip" CanExecute="Switch_CanExecute" Executed="Switch_Executed"/>-->
+        
+    </UserControl.CommandBindings>
+
+    <DockPanel>
+        <Canvas x:Name="canvasOverEverything" Panel.ZIndex="2" Background="Red">
+            <!-- canvas used to put things over the ui -->
+        </Canvas>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="4"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <!-- renderview and keyframe panels go here -->
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="4" />
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- ScrollViewer etc for viewport -->
+                <local:RenderView Grid.Row="0"/>
+
+                <GridSplitter Grid.Row="1" Height="4" HorizontalAlignment="Stretch" Background="Black" />
+
+                <TabControl x:Name="keyClipTab" Grid.Row="2" Background="{DynamicResource BackgroundColor}">
+                    <!-- keyframeview and curveview/clip view -->
+                    <TabItem Header="Keyframe">
+                        <!-- keyframe/curve view -->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="4"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <local:KeyframeView Grid.Column="0" DataContext="{Binding}"/>
+
+                            <GridSplitter Panel.ZIndex="100" Grid.Column="1" Width="4" HorizontalAlignment="Stretch" Background="Black"/>
+
+                            <local:CurveView Grid.Column="2" DataContext="{Binding}"/>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="Clip">
+                        <!-- clip view -->
+                        <local:ClipView DataContext="{Binding}"/>
+                    </TabItem>
+                </TabControl>
+
+            </Grid>
+            <GridSplitter Grid.Column="1" Width="4" HorizontalAlignment="Stretch"  Background="Black"/>
+            <!-- property panel here -->
+            <local:PropertyPanel2 Grid.Column="2" DataContext="{Binding}"/>
+            
+        </Grid>
+    </DockPanel>
+</UserControl>

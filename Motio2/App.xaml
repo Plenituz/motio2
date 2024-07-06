@@ -1,0 +1,486 @@
+﻿<Application x:Class="Motio2.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Motio2"
+             xmlns:conv="clr-namespace:Motio.ValueConverters;assembly=Motio.ValueConverters"
+             StartupUri="StartupWindow.xaml">
+    <Application.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        <conv:Vector3ToPoint3D x:Key="Vector3ToPoint3D"/>
+        <conv:NodeEnabledToBgColor x:Key="NodeEnabledToBgColor"/>
+        <conv:ShowCacheData x:Key="ShowCacheData"/>
+        <conv:PlaceTimelineLimitsAdjuster x:Key="PlaceTimelineLimitsAdjuster"/>
+        <conv:ExtractPropertyValue x:Key="ExtractPropertyValue"/>
+        <conv:ExtractAndDisplayKeyframes x:Key="ExtractAndDisplayKeyframes" />
+        <conv:PositionPlayHeadOnCanvas x:Key="PositionPlayHeadOnCanvas" />
+        <conv:DebugConverter x:Key="DebugConverter" />
+        <conv:ExtractVectorPropertyValue x:Key="ExtractVectorPropertyValue" />
+        <conv:ModeToVis x:Key="ModeToVis" />
+        <conv:StrToSyntaxHighlighting x:Key="StrToSyntaxHighlighting" />
+        <conv:BoolToColor x:Key="BoolToColor"/>
+        <conv:PointConverter x:Key="PointConverter" />
+        <conv:BoolToColorMulti x:Key="BoolToColorMulti" />
+        <conv:BrushToColor x:Key="BrushToColor" />
+        <conv:CountToBool x:Key="CountToBool" />
+        <conv:ToStringInvariant x:Key="ToStringInvariant" />
+        <conv:ToFloat x:Key="ToFloat" />
+        <conv:SliderVisibility x:Key="SliderVisibility" />
+        <conv:BoolToVisHidden x:Key="BoolToVisHidden" />
+        <conv:BoolToVisInverted x:Key="BoolToVisInverted" />
+        <conv:BoolToPathData x:Key="BoolToPathData" />
+        <conv:BoolToPathDataMulti x:Key="BoolToPathDataMulti" />
+        <conv:IconPathData x:Key="IconPathData" />
+        <conv:DynamicSizing x:Key="DynamicSizing" />
+        <conv:ArithmeticConverter x:Key="ArithmeticConverter" />
+        <conv:ConfigEntryToControl x:Key="ConfigEntryToControl" />
+        <conv:EnumList x:Key="EnumList" />
+        <conv:EntryVisibility x:Key="EntryVisibility" />
+
+        <Style x:Key="inTimelineCheck" TargetType="CheckBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <Grid>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup Name="CommonStates">
+                                    <VisualStateGroup.Transitions>
+                                        <VisualTransition From="MouseOver" To="Normal" 
+                                          GeneratedDuration="0:0:0.2">
+                                        </VisualTransition>
+                                    </VisualStateGroup.Transitions>
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="MouseOver">
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="MainEllipse" 
+                                                            Storyboard.TargetProperty="StrokeThickness" 
+                                                             Duration="0:0:0.2"
+                                                            To="2.3"/>
+                                            <DoubleAnimation Storyboard.TargetName="HighlightEllipse" 
+                                                            Storyboard.TargetProperty="Opacity" 
+                                                             Duration="0:0:0.2"
+                                                            To="0.2"/>
+                                            <DoubleAnimation Storyboard.TargetName="HighlightPath" 
+                                                            Storyboard.TargetProperty="Opacity" 
+                                                             Duration="0:0:0.2"
+                                                            To="0.7"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+
+                            <Ellipse x:Name="MainEllipse"
+                                     Stroke="{DynamicResource ContourColor}"
+                                     StrokeThickness="1.3"
+                                     Fill="{DynamicResource LighterButtonColor}"
+                                     Stretch="UniformToFill"
+                                     Height="17"/>
+                            <!--filled path-->
+                            <Path Fill="{DynamicResource IconsColor}"
+                                  Stretch="Uniform"
+                                  Height="10"
+                                  Visibility="{TemplateBinding IsChecked, Converter={StaticResource BoolToVis}}"
+                                  Data="M43.42,86.92,13.08,56.58a9.31,9.31,0,0,1,0-13.17L43.42,13.08a9.31,9.31,0,0,1,13.17,0l17,17L86.92,43.42a9.31,9.31,0,0,1,0,13.17L56.58,86.92A9.31,9.31,0,0,1,43.42,86.92Z"/>
+
+                            <!--stroke only-->
+                            <Path Fill="{DynamicResource IconsColor}"
+                                  Stretch="Uniform"
+                                  Height="10"
+                                  Visibility="{TemplateBinding IsChecked, Converter={StaticResource BoolToVisInverted}}"
+                                  Data="M50,93.64a13.27,13.27,0,0,1-9.41-3.89h0L10.25,59.41a13.31,13.31,0,0,1,0-18.82L40.59,10.25a13.31,13.31,0,0,1,18.82,0L89.75,40.59a13.33,13.33,0,0,1,0,18.82L59.41,89.75A13.27,13.27,0,0,1,50,93.64Zm-3.76-9.55a5.32,5.32,0,0,0,7.51,0L84.09,53.75a5.32,5.32,0,0,0,0-7.51L53.75,15.91a5.31,5.31,0,0,0-7.51,0L15.91,46.25a5.31,5.31,0,0,0,0,7.51L46.25,84.09Z"/>
+                            <!--filled path-->
+                            <Path x:Name="HighlightPath"
+                                  Fill="{DynamicResource IconsColor}"
+                                  Stretch="Uniform"
+                                  Height="10"
+                                  Opacity="0.1"
+                                  Data="M43.42,86.92,13.08,56.58a9.31,9.31,0,0,1,0-13.17L43.42,13.08a9.31,9.31,0,0,1,13.17,0l17,17L86.92,43.42a9.31,9.31,0,0,1,0,13.17L56.58,86.92A9.31,9.31,0,0,1,43.42,86.92Z"/>
+
+                            <Ellipse x:Name="HighlightEllipse"
+                                     StrokeThickness="0"
+                                     Fill="{DynamicResource HighlightColor}"
+                                     Opacity="0"
+                                     Stretch="UniformToFill"
+                                     Height="17"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="halfRoundStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid x:Name="MasterGrid">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup Name="CommonStates">
+                                    <VisualStateGroup.Transitions>
+                                        <VisualTransition From="MouseOver" To="Normal" 
+                                          GeneratedDuration="0:0:0.2">
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="MainPath" 
+                                                            Storyboard.TargetProperty="StrokeThickness" 
+                                                             Duration="0:0:0.2"
+                                                            To="2"/>
+                                                <ColorAnimation Storyboard.TargetName="HighlighterColor" 
+                                                            Storyboard.TargetProperty="Color" 
+                                                             Duration="0:0:0.2"
+                                                            To="#00000000"/>
+                                            </Storyboard>
+                                        </VisualTransition>
+                                    </VisualStateGroup.Transitions>
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="MouseOver">
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="MainPath" 
+                                                            Storyboard.TargetProperty="StrokeThickness" 
+                                                             Duration="0:0:0.2"
+                                                            To="3"/>
+                                            <DoubleAnimation Storyboard.TargetName="HighlighterColor" 
+                                                            Storyboard.TargetProperty="Opacity" 
+                                                             Duration="0:0:0.2"
+                                                            To="0.4"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+
+                            <Path StrokeLineJoin="Round" 
+                                  Stroke="{DynamicResource ContourColor}" 
+                                  StrokeThickness="2" 
+                                  Fill="{TemplateBinding Background}" 
+                                  x:Name="MainPath"
+                                  Stretch="Fill">
+                                <Path.Data>
+                                    <PathGeometry>
+                                        <PathGeometry.Figures>
+                                            <PathFigureCollection>
+                                                <PathFigure StartPoint="0 0">
+                                                    <PathFigure.Segments>
+                                                        <LineSegment>
+                                                            <LineSegment.Point>
+                                                                <MultiBinding Converter="{StaticResource PointConverter}" ConverterParameter="1,0,-9">
+                                                                    <Binding ElementName="Presenter"
+                                                                             Path="ActualWidth"/>
+                                                                    <Binding Source="0"/>
+                                                                </MultiBinding>
+                                                            </LineSegment.Point>
+                                                        </LineSegment>
+                                                        <BezierSegment>
+                                                            <BezierSegment.Point1>
+                                                                <MultiBinding Converter="{StaticResource PointConverter}" ConverterParameter="1,0,-4.5">
+                                                                    <Binding ElementName="Presenter"
+                                                                                 Path="ActualWidth"/>
+                                                                    <Binding Source="0"/>
+                                                                </MultiBinding>
+                                                            </BezierSegment.Point1>
+                                                            <BezierSegment.Point2>
+                                                                <MultiBinding Converter="{StaticResource PointConverter}" ConverterParameter="1,0.25">
+                                                                    <Binding ElementName="Presenter"
+                                                                                 Path="ActualWidth"/>
+                                                                    <Binding ElementName="Presenter"
+                                                                                 Path="ActualHeight"/>
+                                                                </MultiBinding>
+                                                            </BezierSegment.Point2>
+                                                            <BezierSegment.Point3>
+                                                                <MultiBinding Converter="{StaticResource PointConverter}" ConverterParameter="1,0.5">
+                                                                    <Binding ElementName="Presenter"
+                                                                                 Path="ActualWidth"/>
+                                                                    <Binding ElementName="Presenter"
+                                                                                 Path="ActualHeight"/>
+                                                                </MultiBinding>
+                                                            </BezierSegment.Point3>
+                                                        </BezierSegment>
+                                                        <BezierSegment>
+                                                            <BezierSegment.Point1>
+                                                                <MultiBinding Converter="{StaticResource PointConverter}" ConverterParameter="1,0.75">
+                                                                    <Binding ElementName="Presenter"
+                                                                                 Path="ActualWidth"/>
+                                                                    <Binding ElementName="Presenter"
+                                                                                 Path="ActualHeight"/>
+                                                                </MultiBinding>
+                                                            </BezierSegment.Point1>
+                                                            <BezierSegment.Point2>
+                                                                <MultiBinding Converter="{StaticResource PointConverter}" ConverterParameter="1,1,-4.5">
+                                                                    <Binding ElementName="Presenter"
+                                                                                 Path="ActualWidth"/>
+                                                                    <Binding ElementName="Presenter"
+                                                                                 Path="ActualHeight"/>
+                                                                </MultiBinding>
+                                                            </BezierSegment.Point2>
+                                                            <BezierSegment.Point3>
+                                                                <MultiBinding Converter="{StaticResource PointConverter}" ConverterParameter="1,1,-9">
+                                                                    <Binding ElementName="Presenter"
+                                                                                 Path="ActualWidth"/>
+                                                                    <Binding ElementName="Presenter"
+                                                                                 Path="ActualHeight"/>
+                                                                </MultiBinding>
+                                                            </BezierSegment.Point3>
+                                                        </BezierSegment>
+                                                        <LineSegment>
+                                                            <LineSegment.Point>
+                                                                <MultiBinding Converter="{StaticResource PointConverter}" ConverterParameter="0,1">
+                                                                    <Binding ElementName="Presenter"
+                                                                            Path="ActualWidth"/>
+                                                                    <Binding ElementName="Presenter"
+                                                                            Path="ActualHeight"/>
+                                                                </MultiBinding>
+                                                            </LineSegment.Point>
+                                                        </LineSegment>
+                                                    </PathFigure.Segments>
+                                                </PathFigure>
+                                            </PathFigureCollection>
+                                        </PathGeometry.Figures>
+                                    </PathGeometry>
+                                </Path.Data>
+                            </Path>
+                            <Path StrokeThickness="0" 
+                                  Stretch="Fill">
+                                <Path.Fill>
+                                    <SolidColorBrush x:Name="HighlighterColor" 
+                                                     Opacity="0"
+                                                     Color="{Binding Converter={StaticResource BrushToColor}, ConverterParameter=HighlightColor}"/>
+                                </Path.Fill>
+                                <Path.Data>
+                                    <PathGeometry>
+                                        <PathGeometry.Figures>
+                                            <PathFigureCollection>
+                                                <PathFigure StartPoint="0 0">
+                                                    <PathFigure.Segments>
+                                                        <LineSegment>
+                                                            <LineSegment.Point>
+                                                                <MultiBinding Converter="{StaticResource PointConverter}" ConverterParameter="1,0,-9">
+                                                                    <Binding ElementName="Presenter"
+                                                                             Path="ActualWidth"/>
+                                                                    <Binding Source="0"/>
+                                                                </MultiBinding>
+                                                            </LineSegment.Point>
+                                                        </LineSegment>
+                                                        <BezierSegment>
+                                                            <BezierSegment.Point1>
+                                                                <MultiBinding Converter="{StaticResource PointConverter}" ConverterParameter="1,0,-4.5">
+                                                                    <Binding ElementName="Presenter"
+                                                                                 Path="ActualWidth"/>
+                                                                    <Binding Source="0"/>
+                                                                </MultiBinding>
+                                                            </BezierSegment.Point1>
+                                                            <BezierSegment.Point2>
+                                                                <MultiBinding Converter="{StaticResource PointConverter}" ConverterParameter="1,0.25">
+                                                                    <Binding ElementName="Presenter"
+                                                                                 Path="ActualWidth"/>
+                                                                    <Binding ElementName="Presenter"
+                                                                                 Path="ActualHeight"/>
+                                                                </MultiBinding>
+                                                            </BezierSegment.Point2>
+                                                            <BezierSegment.Point3>
+                                                                <MultiBinding Converter="{StaticResource PointConverter}" ConverterParameter="1,0.5">
+                                                                    <Binding ElementName="Presenter"
+                                                                                 Path="ActualWidth"/>
+                                                                    <Binding ElementName="Presenter"
+                                                                                 Path="ActualHeight"/>
+                                                                </MultiBinding>
+                                                            </BezierSegment.Point3>
+                                                        </BezierSegment>
+                                                        <BezierSegment>
+                                                            <BezierSegment.Point1>
+                                                                <MultiBinding Converter="{StaticResource PointConverter}" ConverterParameter="1,0.75">
+                                                                    <Binding ElementName="Presenter"
+                                                                                 Path="ActualWidth"/>
+                                                                    <Binding ElementName="Presenter"
+                                                                                 Path="ActualHeight"/>
+                                                                </MultiBinding>
+                                                            </BezierSegment.Point1>
+                                                            <BezierSegment.Point2>
+                                                                <MultiBinding Converter="{StaticResource PointConverter}" ConverterParameter="1,1,-4.5">
+                                                                    <Binding ElementName="Presenter"
+                                                                                 Path="ActualWidth"/>
+                                                                    <Binding ElementName="Presenter"
+                                                                                 Path="ActualHeight"/>
+                                                                </MultiBinding>
+                                                            </BezierSegment.Point2>
+                                                            <BezierSegment.Point3>
+                                                                <MultiBinding Converter="{StaticResource PointConverter}" ConverterParameter="1,1,-9">
+                                                                    <Binding ElementName="Presenter"
+                                                                                 Path="ActualWidth"/>
+                                                                    <Binding ElementName="Presenter"
+                                                                                 Path="ActualHeight"/>
+                                                                </MultiBinding>
+                                                            </BezierSegment.Point3>
+                                                        </BezierSegment>
+                                                        <LineSegment>
+                                                            <LineSegment.Point>
+                                                                <MultiBinding Converter="{StaticResource PointConverter}" ConverterParameter="0,1">
+                                                                    <Binding ElementName="Presenter"
+                                                                            Path="ActualWidth"/>
+                                                                    <Binding ElementName="Presenter"
+                                                                            Path="ActualHeight"/>
+                                                                </MultiBinding>
+                                                            </LineSegment.Point>
+                                                        </LineSegment>
+                                                    </PathFigure.Segments>
+                                                </PathFigure>
+                                            </PathFigureCollection>
+                                        </PathGeometry.Figures>
+                                    </PathGeometry>
+                                </Path.Data>
+                            </Path>
+                            
+                            
+                            <ContentPresenter x:Name="Presenter" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                            Margin="7 4 10 5"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="removeFromProp" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid Width="20" Height="20">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup Name="CommonStates">
+                                    <VisualStateGroup.Transitions>
+                                        <VisualTransition From="MouseOver" To="Normal" 
+                                          GeneratedDuration="0:0:0.2"/>
+                                    </VisualStateGroup.Transitions>
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="MouseOver">
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="MainEllipse" 
+                                                            Storyboard.TargetProperty="StrokeThickness" 
+                                                             Duration="0:0:0.2"
+                                                            To="1.5"/>
+                                            <DoubleAnimation Storyboard.TargetName="HighlightEllipse" 
+                                                            Storyboard.TargetProperty="Opacity" 
+                                                             Duration="0:0:0.2"
+                                                            To="0.2"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Ellipse Stretch="UniformToFill"
+                                     x:Name="MainEllipse"
+                                     Height="20"
+                                     Stroke="{DynamicResource ContourColor}"
+                                     StrokeThickness="0"
+                                     Fill="{DynamicResource ButtonColor}"/>
+                            <Ellipse Stretch="UniformToFill"
+                                     x:Name="HighlightEllipse"
+                                     Height="20"
+                                     Opacity="0"
+                                     Fill="{DynamicResource HighlightColor}"/>
+                            <Path Fill="{DynamicResource IconsColor}"
+                                  Stretch="Uniform"
+                                  Margin="4.2"
+                                  Data="M64.13,51.59,90.65,78.11a8.87,8.87,0,0,1,0,12.54h0a8.87,8.87,0,0,1-12.54,0L51.59,64.13a2.25,2.25,0,0,0-3.18,0L21.89,90.65a8.87,8.87,0,0,1-12.54,0h0a8.87,8.87,0,0,1,0-12.54L35.87,51.59a2.25,2.25,0,0,0,0-3.18L9.35,21.89a8.87,8.87,0,0,1,0-12.54h0a8.87,8.87,0,0,1,12.54,0L48.41,35.87a2.25,2.25,0,0,0,3.18,0L78.11,9.35a8.87,8.87,0,0,1,12.54,0h0a8.87,8.87,0,0,1,0,12.54L64.13,48.41A2.25,2.25,0,0,0,64.13,51.59Z"/>
+
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="addToTLButton" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid Width="20" Height="20">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup Name="CommonStates">
+                                    <VisualStateGroup.Transitions>
+                                        <VisualTransition From="MouseOver" To="Normal" 
+                                          GeneratedDuration="0:0:0.2"/>
+                                    </VisualStateGroup.Transitions>
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="MouseOver">
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="MainEllipse" 
+                                                            Storyboard.TargetProperty="StrokeThickness" 
+                                                             Duration="0:0:0.2"
+                                                            To="1.5"/>
+                                            <DoubleAnimation Storyboard.TargetName="HighlightEllipse" 
+                                                            Storyboard.TargetProperty="Opacity" 
+                                                             Duration="0:0:0.2"
+                                                            To="0.2"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Ellipse Stretch="UniformToFill"
+                                     x:Name="MainEllipse"
+                                     Height="20"
+                                     Stroke="{DynamicResource ContourColor}"
+                                     StrokeThickness="0"
+                                     Fill="{DynamicResource ButtonColor}"/>
+                            <Ellipse Stretch="UniformToFill"
+                                     x:Name="HighlightEllipse"
+                                     Height="20"
+                                     Opacity="0"
+                                     Fill="{DynamicResource HighlightColor}"/>
+                            <Path Fill="{DynamicResource IconsColor}"
+                                  Stretch="Uniform"
+                                  Margin="3"
+                                  Data="M100,50a5.23,5.23,0,0,1-5.23,5.23H80.83a31.25,31.25,0,0,1-25.6,25.6V94.77a5.23,5.23,0,0,1-10.45,0V80.83a31.25,31.25,0,0,1-25.6-25.6H5.23a5.23,5.23,0,0,1,0-10.45H19.17a31.25,31.25,0,0,1,25.6-25.6V5.23a5.23,5.23,0,0,1,10.45,0V19.17a31.25,31.25,0,0,1,25.6,25.6H94.77A5.23,5.23,0,0,1,100,50Z"/>
+                            
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <Style x:Key="plusButton" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup Name="CommonStates">
+                                    <VisualStateGroup.Transitions>
+                                        <VisualTransition From="MouseOver" To="Normal" 
+                                          GeneratedDuration="0:0:0.2"/>
+                                    </VisualStateGroup.Transitions>
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="MouseOver">
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="MainEllipse" 
+                                                            Storyboard.TargetProperty="StrokeThickness" 
+                                                             Duration="0:0:0.2"
+                                                            To="1.5"/>
+                                            <DoubleAnimation Storyboard.TargetName="HighlightEllipse" 
+                                                            Storyboard.TargetProperty="Opacity" 
+                                                             Duration="0:0:0.2"
+                                                            To="0.2"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+
+                            <Ellipse Stretch="UniformToFill"
+                                     x:Name="MainEllipse"
+                                     Height="20"
+                                     Stroke="{DynamicResource ContourColor}"
+                                     StrokeThickness="0"
+                                     Fill="{DynamicResource ButtonColor}"/>
+                            <Ellipse Stretch="UniformToFill"
+                                     x:Name="HighlightEllipse"
+                                     Height="20"
+                                     Opacity="0"
+                                     Fill="{DynamicResource HighlightColor}"/>
+                            <Path Stretch="Uniform"
+                                  Fill="{DynamicResource IconsColor}"
+                                  Width="12.4"
+                                  Height="12.4"
+                                  Data="F1 M 77.500,38.750 L 77.500,38.750 C 77.500,41.445 75.315,43.630 72.620,43.630 L 44.750,43.630 C 44.131,43.630 43.630,44.131 43.630,44.750 L 43.630,72.620 C 43.630,75.315 41.445,77.500 38.750,77.500 L 38.750,77.500 C 36.055,77.500 33.870,75.315 33.870,72.620 L 33.870,44.750 C 33.870,44.131 33.369,43.630 32.750,43.630 L 4.880,43.630 C 2.185,43.630 0.000,41.445 0.000,38.750 L 0.000,38.750 C 0.000,36.055 2.185,33.870 4.880,33.870 L 32.750,33.870 C 33.369,33.870 33.870,33.369 33.870,32.750 L 33.870,4.880 C 33.870,2.185 36.055,0.000 38.750,0.000 L 38.750,0.000 C 41.445,0.000 43.630,2.185 43.630,4.880 L 43.630,32.750 C 43.630,33.369 44.131,33.870 44.750,33.870 L 72.620,33.870 C 75.315,33.870 77.500,36.055 77.500,38.750 Z"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        
+
+    </Application.Resources>
+</Application>

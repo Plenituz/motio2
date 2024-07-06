@@ -1,0 +1,63 @@
+﻿<UserControl x:Class="Motio.UI.Views.RenderView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Motio.UI.Views"
+             xmlns:gizmo="clr-namespace:Motio.UI.Gizmos"
+             xmlns:zoomable="clr-namespace:System.Windows.Controls;assembly=MS.ZoomableCanvas"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300"
+             
+             Loaded="RenderView_Loaded"
+             DataContext="{Binding AnimationTimeline}">
+    <!-- ^ data context is MainControlDataContext by default, we change it to the AnimationTimelineViewModel ^-->
+    
+    <!--<ScrollViewer   
+        CanContentScroll="True"
+        VerticalScrollBarVisibility="Auto"
+        HorizontalScrollBarVisibility="Auto">-->
+    <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Disabled" x:Name="scroll">
+        
+        <Grid x:Name="grid">
+            <zoomable:ZoomableCanvas x:Name="zoomableCanvas"
+                                     Background="{DynamicResource LighterBackgroundColor}"
+                                     Width="{Binding ResolutionWidth, Converter={StaticResource ArithmeticConverter}, ConverterParameter='*4'}"
+                                     Height="{Binding ResolutionHeight, Converter={StaticResource ArithmeticConverter}, ConverterParameter='*4'}">
+                <Border Background="White" x:Name="border">
+                    <Image x:Name="viewport"/>
+                </Border>
+                <Canvas Width="{Binding ElementName=zoomableCanvas, Path=ActualWidth}"
+                        Height="{Binding ElementName=zoomableCanvas, Path=ActualHeight}"
+                        MouseWheel="zoomableCanvas_MouseWheel"
+                        Background="Transparent"
+                        x:Name="clickCanvas"/>
+                <gizmo:GizmoCanvas Background="Transparent" 
+                                   x:Name="gizmoCanvas"
+                                   MouseWheel="zoomableCanvas_MouseWheel"
+                                   Width="{Binding ResolutionWidth}"
+                                   Height="{Binding ResolutionHeight}"/>
+
+            </zoomable:ZoomableCanvas>
+        </Grid>
+    </ScrollViewer>
+
+    <!--<ZoomAndPan:ZoomAndPanControl
+            x:Name="zoomAndPanControl"
+            Background="{DynamicResource LighterBackgroundColor}"
+            ContentScaleChanged="zoomAndPanControl_ContentScaleChanged"
+            MouseWheel="zoomAndPanControl_MouseWheel">
+            <Border Background="{DynamicResource DarkerBackgroundColor}" Name="border">
+                <Grid Name="viewportGrid" Background="White" Margin="1" 
+                    Width="{Binding ResolutionWidth}"
+                    Height="{Binding ResolutionHeight}">
+        
+                    <Image x:Name="viewport"/>
+                    <gizmo:GizmoCanvas Background="Transparent" x:Name="gizmoCanvas">
+                    </gizmo:GizmoCanvas>
+                </Grid>
+            </Border>
+        </ZoomAndPan:ZoomAndPanControl>-->
+    <!--</ScrollViewer>-->
+
+</UserControl>

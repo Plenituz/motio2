@@ -1,0 +1,81 @@
+﻿<UserControl x:Class="Motio.UI.Views.PropertyDisplays.IntPropertyDisplay"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Motio.UI.Views.PropertyDisplays"
+             xmlns:views="clr-namespace:Motio.UI.Views"
+        Loaded="UserControl_Loaded"
+        LayoutUpdated="UserControl_LayoutUpdated"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <StackPanel Orientation="Horizontal">
+        <!-- text before node list -->
+        <!-- j'ai regroupé les truc avant et apres la node list dans des stack panel -->
+        <!-- parceque je sais pas comment faire le sizing de la node list pour l'instant -->
+        <local:PropertyNameDisplay/>
+
+        <TextBlock x:Name="inValueText"
+                   Focusable="False"
+                   Cursor="SizeWE"
+                   Foreground="{DynamicResource TextColor}"
+                   TextAlignment="Center"
+                   Width="30"
+                   VerticalAlignment="Center">
+                <!-- ^ bind to the main control view model -->
+            <TextBlock.Text>
+                <MultiBinding ConverterParameter="in" Converter="{StaticResource ExtractPropertyValue}">
+                    <!--get the root data context which is still a NodePropertyBaseViewModel-->
+                    <Binding />
+                    <Binding Path="Root.AnimationTimeline.CurrentFrame"/>
+                    <!--TODO check if this works-->
+                    <Binding Path="StaticValue"/>
+                    <!--<Binding Path="Root.AnimationTimeline.CacheUpdated"/>-->
+                </MultiBinding>
+            </TextBlock.Text>
+            <TextBlock.TextDecorations>
+                <TextDecoration Location="Underline" PenOffset="2"
+                                    PenThicknessUnit="FontRecommended">
+                    <TextDecoration.Pen>
+                        <Pen Brush="{DynamicResource UnderlineColor}" Thickness="2">
+                            <Pen.DashStyle>
+                                <DashStyle Dashes="3"/>
+                            </Pen.DashStyle>
+                        </Pen>
+                    </TextDecoration.Pen>
+                </TextDecoration>
+            </TextBlock.TextDecorations>
+        </TextBlock>
+        <TextBlock Text=">" VerticalAlignment="Center" Foreground="{DynamicResource TextColor}"/>
+
+        <Slider Width="100"
+                Margin="5 0"
+                Minimum="{Binding RangeFrom}"
+                Maximum="{Binding RangeTo}"
+                Value="{Binding StaticValue, Converter={StaticResource ToFloat}}">
+            <Slider.Visibility>
+                <MultiBinding Converter="{StaticResource SliderVisibility}">
+                    <Binding Path="RangeFrom"/>
+                    <Binding Path="RangeTo"/>
+                </MultiBinding>
+            </Slider.Visibility>
+        </Slider>
+        
+        <views:NodeListAndAdd />
+
+        <!-- the next items are invisible when there is no node in the list -->
+        <TextBlock x:Name="outValue" Foreground="{DynamicResource TextColor}" VerticalAlignment="Center">
+            <TextBlock.Text>
+                <MultiBinding ConverterParameter="out" Converter="{StaticResource ExtractPropertyValue}">
+                    <!--this sends the datacontext to the converter, in this case it's the NodeProperty object-->
+                    <Binding />
+                    <!--Bind to current frame so the number gets updated
+                            every time the current frame changes-->
+                    <Binding Path="Root.AnimationTimeline.CurrentFrame"/>
+                    <!--<Binding Path="Root.AnimationTimeline.CacheUpdated"/>-->
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
+
+    </StackPanel>
+</UserControl>

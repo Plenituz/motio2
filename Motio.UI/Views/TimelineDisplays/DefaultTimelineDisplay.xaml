@@ -1,0 +1,46 @@
+﻿<UserControl x:Class="Motio.UI.Views.TimelineDisplays.DefaultTimelineDisplay"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Motio.UI.Views.TimelineDisplays"
+             xmlns:views="clr-namespace:Motio.UI.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <!-- DataContext should be NodePropertyBaseViewModel containing the NodePropertyBase -->
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+
+        <local:KeyframeTimelineCanvas x:Name="keyframeCanvas" 
+                                      Grid.ColumnSpan="2"
+                                      Grid.Column="0" 
+                                      MouseDown="KeyframeCanvas_MouseDown" 
+                                      Height="20" 
+                                      Background="Transparent">
+            <TextBlock FontStyle="Italic"
+                        Panel.ZIndex="-1"
+                        Foreground="{DynamicResource PassiveTextColor}"
+                        IsHitTestVisible="False"
+                        Text="{Binding Name}"/>
+            <!-- display keyframes and bind to size of canvas etc-->
+            <local:KeyframeTimelineCanvas.IsEnabled>
+                <MultiBinding Converter="{StaticResource ExtractAndDisplayKeyframes}">
+                    <Binding />
+                    <Binding ElementName="keyframeCanvas" Path="ActualWidth"/>
+                    <Binding Path="Root.KeyframePanel.Left"/>
+                    <Binding Path="Root.KeyframePanel.Right"/>
+                    <Binding ElementName="keyframeCanvas"/>
+                    <Binding Path="KeyframeHolder"/>
+                    <Binding Path="Root.AnimationTimeline.MaxFrame"/>
+                </MultiBinding>
+            </local:KeyframeTimelineCanvas.IsEnabled>
+        </local:KeyframeTimelineCanvas>
+
+        <local:KeyframeButtonGroup Grid.Column="1"/>
+
+    </Grid>
+</UserControl>

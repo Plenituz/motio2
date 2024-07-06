@@ -1,0 +1,46 @@
+﻿<UserControl x:Class="Motio.UI.Views.PropertyDisplays.GroupPropertyDisplay"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:views="clr-namespace:Motio.UI.Views"
+             xmlns:local="clr-namespace:Motio.UI.Views.PropertyDisplays"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <StackPanel>
+        <TreeView BorderThickness="0">
+            <TreeView.Resources>
+                <!-- prevent the highlighting -->
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"
+                  Color="Transparent" />
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}"
+                  Color="{Binding Converter={StaticResource BrushToColor}, ConverterParameter=TextColor}" />
+                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}"
+                  Color="Transparent" />
+                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}"
+                  Color="{Binding Converter={StaticResource BrushToColor}, ConverterParameter=TextColor}" />
+            </TreeView.Resources>
+
+            <TreeViewItem Margin="-5 0 0 0" 
+                          Header="{Binding Name}" 
+                          ToolTip="{Binding Description}"
+                          Background="{DynamicResource BackgroundColor}"
+                          Foreground="{DynamicResource TextColor}">
+                <TreeViewItem Margin="-20 0 0 0">
+                    <TreeViewItem.Header>
+                        <ItemsControl ItemsSource="{Binding Path=Properties}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <!-- item template for each property -->
+                                    <views:PropertyDisplay/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </TreeViewItem.Header>
+                </TreeViewItem>
+            </TreeViewItem>
+        </TreeView>
+        
+        
+    </StackPanel>
+</UserControl>

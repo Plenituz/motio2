@@ -1,0 +1,46 @@
+﻿<Window x:Class="Motio.UI.Views.Dialogs.FileEditingDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Motio.UI.Views.Dialogs"
+             xmlns:cmds="clr-namespace:Motio.UI"
+             xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300"
+             Title="{Binding FilePath}"
+             Width="800"
+             Height="800">
+    <Window.CommandBindings>
+        <CommandBinding Command="cmds:CustomCommands.Open" CanExecute="Yes_CanExecute" Executed="Open_Executed"/>
+        <CommandBinding Command="cmds:CustomCommands.Save" CanExecute="Yes_CanExecute" Executed="Save_Executed"/>
+    </Window.CommandBindings>
+    
+    
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="Open" Command="cmds:CustomCommands.Open"></MenuItem>
+                <MenuItem Header="Save" Command="cmds:CustomCommands.Save"></MenuItem>
+            </MenuItem>
+            <MenuItem Click="Apply_Click">
+                <MenuItem.Header>
+                    <Button Content="+" Click="Apply_Click"></Button>
+                </MenuItem.Header>
+            </MenuItem>
+        </Menu>
+        <Border Background="Gray" DockPanel.Dock="Bottom">
+            <avalonedit:TextEditor
+                x:Name="editor"
+                Margin="0.8"
+                Encoding="{Binding Encoding}"
+                Focusable="True"
+                HorizontalScrollBarVisibility="Auto"
+                VerticalScrollBarVisibility="Auto"
+                ShowLineNumbers="True"
+                SyntaxHighlighting="Python" 
+                FontFamily="Consolas" 
+                FontSize="10pt"/>
+        </Border>
+    </DockPanel>
+</Window>

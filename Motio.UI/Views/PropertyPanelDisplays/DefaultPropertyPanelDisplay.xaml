@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="Motio.UI.Views.PropertyPanelDisplays.DefaultPropertyPanelDisplay"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Motio.UI.Views.PropertyPanelDisplays"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <!--<Ellipse Fill="Blue" Width="20" Height="20"/>-->
+    <Button Focusable="False"
+            Style="{StaticResource halfRoundStyle}"
+            Content="{Binding UserGivenName}" 
+            Foreground="{DynamicResource TextColor}">
+        <Button.Background>
+            <MultiBinding Converter="{StaticResource BoolToColorMulti}">
+                <Binding Path="Enabled"/>
+                <Binding Source="{StaticResource ActiveElementColor}"/>
+                <Binding Source="{StaticResource PassiveElementColor}"/>
+            </MultiBinding>
+        </Button.Background>
+        <Button.ContextMenu>
+            <ContextMenu>
+                <MenuItem Header="Delete"
+                          Click="Delete_Click"
+                          DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}"/>
+                <MenuItem Header="Activate/Deactivate"
+                          Click="ActDeact_Click"
+                          DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}"/>
+                <MenuItem Header="Copy UUID"
+                          Click="CopyUUID_Click"
+                          DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}"/>
+            </ContextMenu>
+        </Button.ContextMenu>
+    </Button>
+</UserControl>

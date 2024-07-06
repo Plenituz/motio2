@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="Motio.UI.Views.CurveView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Motio.UI.Views"
+             
+             Loaded="CurveView_Loaded"
+             
+             mc:Ignorable="d"              
+             d:DesignHeight="300" d:DesignWidth="300">
+    <!-- The CurveViewCanvas is just a canvas that implements ISelectionClearer for the Global selection system -->
+    <local:CurveViewCanvas x:Name="curveCanvas" 
+                           Background="Transparent">
+
+        <!-- curve view here -->
+        <Rectangle x:Name="ControlRect" Width="20" 
+                   Height="20" 
+                   Fill="Plum"/>
+        <local:CurveViewCanvas.LayoutTransform>
+             <!--reverse the canvas so the curve is not updside down--> 
+            <ScaleTransform ScaleX="1" ScaleY="-1" />
+        </local:CurveViewCanvas.LayoutTransform>
+        <!--<local:CurveViewCanvas.IsEnabled>
+            <MultiBinding Converter="{StaticResource UpdateCurveView}">
+                <Binding ElementName="curveCanvas"/>
+                <Binding ElementName="curveCanvas" Path="ActualWidth"/>
+                <Binding ElementName="curveCanvas" Path="ActualHeight"/>
+                --><!--<Binding Source="{x:Static viewModels:MainWindowViewModel.Instance}" 
+                             Path="LeftCurveView"/>--><!--
+                <Binding Path="CurvePanel.Left"/>
+                --><!--<Binding Source="{x:Static viewModels:MainWindowViewModel.Instance}" 
+                             Path="RightCurveView"/>--><!--
+                <Binding Path="CurvePanel.Right"/>
+                --><!--<Binding Source="{x:Static viewModels:MainWindowViewModel.Instance}" 
+                             Path="TopCurveView"/>--><!--
+                <Binding Path="CurvePanel.Top"/>
+                --><!--<Binding Source="{x:Static viewModels:MainWindowViewModel.Instance}" 
+                             Path="BottomCurveView"/>--><!--
+                <Binding Path="CurvePanel.Bottom"/>
+                <Binding Path="CurvePanel.Renderer"/>
+            </MultiBinding>
+        </local:CurveViewCanvas.IsEnabled>-->
+    </local:CurveViewCanvas>
+</UserControl>

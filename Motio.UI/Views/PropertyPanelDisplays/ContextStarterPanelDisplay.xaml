@@ -1,0 +1,70 @@
+﻿<UserControl x:Class="Motio.UI.Views.PropertyPanelDisplays.ContextStarterPanelDisplay"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Motio.UI.Views.PropertyPanelDisplays"
+             xmlns:views="clr-namespace:Motio.UI.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <StackPanel Orientation="Horizontal" x:Name="stackPanel">
+        <Button Focusable="False"
+            Style="{StaticResource halfRoundStyle}"
+            Content="{Binding UserGivenName}" 
+            Foreground="{DynamicResource TextColor}">
+            <Button.Background>
+                <MultiBinding Converter="{StaticResource BoolToColorMulti}">
+                    <Binding Path="Enabled"/>
+                    <Binding Source="{StaticResource ContextStarterColor}"/>
+                    <Binding Source="{StaticResource ContextStarterPassiveColor}"/>
+                </MultiBinding>
+            </Button.Background>
+            <Button.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Delete"
+                          Click="Delete_Click"
+                          DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}"/>
+                    <MenuItem Header="Activate/Deactivate"
+                          Click="ActDeact_Click"
+                          DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}"/>
+                    <MenuItem Header="Copy UUID"
+                          Click="CopyUUID_Click"
+                          DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}"/>
+                </ContextMenu>
+            </Button.ContextMenu>
+        </Button>
+
+        <ItemsControl x:Name="contextNodeList" ItemsSource="{Binding Path=AttachedNodes}" AlternationCount="99999999">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <!-- somehow if you use PropertyPanelDisplay nothing show here -->
+                        <!--<local:PropertyPanelDisplay DataContext="{Binding}" />-->
+                        <views:NodeButton2 Panel.ZIndex="{Binding Path=(ItemsControl.AlternationIndex), 
+                            RelativeSource={RelativeSource TemplatedParent}, 
+                            Converter={StaticResource DebugConverter}}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <Rectangle Height="{Binding ElementName=stackPanel, Path=ActualHeight}"
+                   Width="10"
+                   StrokeThickness="2"
+                   Stroke="{StaticResource ContourColor}">
+            <Rectangle.Fill>
+                <MultiBinding Converter="{StaticResource BoolToColorMulti}">
+                    <Binding Path="Enabled"/>
+                    <Binding Source="{StaticResource ContextStarterColor}"/>
+                    <Binding Source="{StaticResource ContextStarterPassiveColor}"/>
+                </MultiBinding>
+            </Rectangle.Fill>
+        </Rectangle>
+    </StackPanel>
+
+</UserControl>

@@ -1,0 +1,67 @@
+﻿<UserControl x:Class="Motio.UI.Views.GraphicsNodeDisplay"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Motio.UI.Views"
+             Loaded="UserControl_Loaded"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <!-- DataContext = GraphicsNodeViewModel -->
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+
+        <local:IconButton VerticalAlignment="Bottom"
+                          Height="20"
+                          Click="IconButton_Click"
+                          PathData="{Binding Path=DataContext.Visible, RelativeSource={RelativeSource AncestorType={x:Type Grid}}, Converter={StaticResource BoolToPathData}, ConverterParameter='file:Icons/visibility_open|file:Icons/visibility_closed'}"
+                          PathMargin="2">
+            <local:IconButton.IconBackground>
+                <MultiBinding Converter="{StaticResource BoolToColorMulti}">
+                    <Binding Path="DataContext.Visible" RelativeSource="{RelativeSource AncestorType={x:Type Grid}}" />
+                    <Binding Source="{StaticResource ButtonColor}"/>
+                    <Binding Source="{StaticResource ButtonDisabledColor}"/>
+                </MultiBinding>
+            </local:IconButton.IconBackground>
+        </local:IconButton>
+
+        <TextBlock Text="{Binding UserGivenName}"
+                   Grid.Column="1"
+                   ToolTip="Graphics Node" 
+                   Margin="0 0 3 0"
+                   MouseDown="NameDisplay_MouseDown"
+                   x:Name="NameDisplay"
+                   Foreground="{DynamicResource TextColor}" 
+                   VerticalAlignment="Bottom">
+            <TextBlock.TextDecorations>
+                <TextDecoration Location="Underline" PenOffset="2"
+                                    PenThicknessUnit="FontRecommended">
+                    <TextDecoration.Pen>
+                        <Pen Brush="{DynamicResource UnderlineColor}" Thickness="2">
+                            <Pen.DashStyle>
+                                <DashStyle Dashes="3"/>
+                            </Pen.DashStyle>
+                        </Pen>
+                    </TextDecoration.Pen>
+                </TextDecoration>
+            </TextBlock.TextDecorations>
+        </TextBlock>
+
+        <local:ForkedNodeList Grid.Column="2"/>
+
+        <Button Margin="5 0"
+                x:Name="AddButton"
+                Padding="0 10" 
+                Content="+" 
+                Grid.Column="3"
+                VerticalAlignment="Bottom"
+                Style="{StaticResource plusButton}" 
+                Focusable="False"
+                PreviewMouseUp="PlusBtn_PreviewMouseUp"/>
+    </Grid>
+</UserControl>

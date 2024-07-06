@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="Motio.UI.Views.PropertyDisplays.PropertyNameDisplay"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Motio.UI.Views.PropertyDisplays"
+             mc:Ignorable="d" 
+             Loaded="PropertyNameDisplay_Loaded"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.ContextMenu>
+            <ContextMenu>
+                <MenuItem Header="Copy path" Click="CopyPath_Click"/>
+            </ContextMenu>
+        </Grid.ContextMenu>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto" SharedSizeGroup="Name"/>
+        </Grid.ColumnDefinitions>
+        
+        <Button Content="!!!"
+                Grid.Column="0"
+                    Focusable="False"
+                    Background="Red"
+                    Visibility="{Binding Path=HasErrors, Converter={StaticResource BoolToVis}}"
+                    Click="Error_Click"/>
+        <CheckBox Focusable="False"
+                  Style="{StaticResource inTimelineCheck}"
+                  Grid.Column="1"
+                  x:Name="isInTimeline"
+                  Click="IsInTimeline_Click"
+                  IsChecked="{Binding IsInTimeline, Mode=OneWay}"
+                  Margin="3 0"
+                  Visibility="{Binding Path=IsKeyframable, Converter={StaticResource BoolToVisHidden}}"/>
+        <TextBlock Text="{Binding Path=Name, StringFormat='{}{0}: '}"
+                   Grid.Column="2"
+                   ToolTip="{Binding Description}"
+                   Foreground="{DynamicResource TextColor}"
+                   VerticalAlignment="Center"/>
+    </Grid>
+</UserControl>

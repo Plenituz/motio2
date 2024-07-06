@@ -1,0 +1,95 @@
+﻿<UserControl x:Class="Motio.UI.Views.PropertyDisplays.VectorPropertyDisplay"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Motio.UI.Views.PropertyDisplays"
+             xmlns:views="clr-namespace:Motio.UI.Views"
+             mc:Ignorable="d" 
+             Loaded="UserControl_Loaded"
+             LayoutUpdated="UserControl_LayoutUpdated"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <DockPanel LastChildFill="True">
+        <!-- text before node list -->
+        <!-- j'ai regroupé les truc avant et apres la node list dans des stack panel -->
+        <!-- parceque je sais pas comment faire le sizing de la node list pour l'instant -->
+        <StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
+            <local:PropertyNameDisplay/>
+            <CheckBox x:Name="UniformCheck" VerticalAlignment="Center" IsChecked="{Binding Uniform}"/>
+            <TextBlock Text="   X:" VerticalAlignment="Center" Foreground="{DynamicResource TextColor}"/>
+
+            <TextBlock x:Name="inValueX"
+                       VerticalAlignment="Center"
+                       Focusable="False"
+                       Cursor="SizeWE"
+                       Width="30"
+                       Foreground="{DynamicResource TextColor}">
+                <TextBlock.Text>
+                    <MultiBinding ConverterParameter="x,in" Converter="{StaticResource ExtractVectorPropertyValue}">
+                        <Binding />
+                        <Binding Path="Root.AnimationTimeline.CurrentFrame"/>
+                        <Binding Path="StaticValue"/>
+                        <Binding Path="X"/>
+                        <!--<Binding Path="Root.AnimationTimeline.CacheUpdated"/>-->
+                    </MultiBinding>
+                </TextBlock.Text>
+                <TextBlock.TextDecorations>
+                    <TextDecoration Location="Underline" PenOffset="2"
+                                    PenThicknessUnit="FontRecommended">
+                        <TextDecoration.Pen>
+                            <Pen Brush="{DynamicResource UnderlineColor}" Thickness="2">
+                                <Pen.DashStyle>
+                                    <DashStyle Dashes="3"/>
+                                </Pen.DashStyle>
+                            </Pen>
+                        </TextDecoration.Pen>
+                    </TextDecoration>
+                </TextBlock.TextDecorations>
+            </TextBlock>
+            <TextBlock Text="   Y:" VerticalAlignment="Center" Foreground="{DynamicResource TextColor}"/>
+            <TextBlock x:Name="inValueY"
+                       Focusable="False"
+                       VerticalAlignment="Center"
+                       Cursor="SizeWE"
+                       Width="30"
+                       Foreground="{DynamicResource TextColor}">
+                <TextBlock.Text>
+                    <MultiBinding ConverterParameter="y,in" Converter="{StaticResource ExtractVectorPropertyValue}">
+                        <Binding />
+                        <Binding Path="Root.AnimationTimeline.CurrentFrame"/>
+                        <Binding Path="StaticValue"/>
+                        <Binding Path="Y"/>
+                        <!--<Binding Path="Root.AnimationTimeline.CacheUpdated"/>-->
+                    </MultiBinding>
+                </TextBlock.Text>
+                <TextBlock.TextDecorations>
+                    <TextDecoration Location="Underline" PenOffset="2"
+                                    PenThicknessUnit="FontRecommended">
+                        <TextDecoration.Pen>
+                            <Pen Brush="{DynamicResource UnderlineColor}" Thickness="2">
+                                <Pen.DashStyle>
+                                    <DashStyle Dashes="3"/>
+                                </Pen.DashStyle>
+                            </Pen>
+                        </TextDecoration.Pen>
+                    </TextDecoration>
+                </TextBlock.TextDecorations>
+            </TextBlock>
+            <TextBlock Text=" >" VerticalAlignment="Center" Foreground="{DynamicResource TextColor}"/>
+        </StackPanel>
+
+        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+            <views:NodeListAndAdd />
+            <TextBlock x:Name="outValue" VerticalAlignment="Center" Foreground="{DynamicResource TextColor}">
+                <TextBlock.Text>
+                    <MultiBinding ConverterParameter="out" Converter="{StaticResource ExtractPropertyValue}">
+                        <Binding />
+                        <Binding Path="Root.AnimationTimeline.CurrentFrame"/>
+                        <!--<Binding Path="Root.AnimationTimeline.CacheUpdated"/>-->
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+        </StackPanel>
+
+    </DockPanel>
+</UserControl>

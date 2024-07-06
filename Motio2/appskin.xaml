@@ -1,0 +1,43 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Motio2">
+    <SolidColorBrush x:Key="ActiveElementColor" Color="#FF4178d3"/>
+    <SolidColorBrush x:Key="PassiveElementColor" Color="#FF4271bd"/>
+    <SolidColorBrush x:Key="BackgroundColor" Color="#FF2A2A2A"/>
+    <SolidColorBrush x:Key="DarkerBackgroundColor" Color="#FF1A1A1A"/>
+    <SolidColorBrush x:Key="LighterBackgroundColor" Color="#FF4B4B4B"/>
+    <SolidColorBrush x:Key="ContourColor" Color="#FFE1E1E1"/>
+    <!-- on hover over things -->
+    <SolidColorBrush x:Key="HighlightColor" Color="#FFFFFFFF"/>
+    <SolidColorBrush x:Key="ContextStarterColor" Color="#FFFF0000"/>
+    <SolidColorBrush x:Key="ContextStarterPassiveColor" Color="#FF660000"/>
+    <SolidColorBrush x:Key="ContextAwareColor" Color="#FFFF0000"/>
+    <SolidColorBrush x:Key="ContextAwarePassiveColor" Color="#FF660000"/>
+    <SolidColorBrush x:Key="TextColor" Color="#FFF0F0F0"/>
+    <SolidColorBrush x:Key="PassiveTextColor" Color="#FFE1E1E1"/>
+
+    <SolidColorBrush x:Key="ButtonColor" Color="#FF4271bd"/>
+    <SolidColorBrush x:Key="ButtonDisabledColor" Color="#FFff71bd"/>
+    <SolidColorBrush x:Key="LighterButtonColor" Color="#FF52A4EB"/>
+    <SolidColorBrush x:Key="ToolColor" Color="#FF4271bd"/>
+    <SolidColorBrush x:Key="SelectedToolColor" Color="#FFf4a041"/>
+    <SolidColorBrush x:Key="IconsColor" Color="Black"/>
+
+    <SolidColorBrush x:Key="TimelineClickZoneColor" Color="Plum"/>
+    <SolidColorBrush x:Key="PlayHeadColor" Color="Red"/>
+    <SolidColorBrush x:Key="TimelineAdjusterCenterColor" Color="AntiqueWhite"/>
+    <SolidColorBrush x:Key="TimelineAdjusterSidesColor" Color="Yellow"/>
+    <SolidColorBrush x:Key="CachedFrameColor" Color="YellowGreen"/>
+    <SolidColorBrush x:Key="NotCachedFrameColor" Color="Red"/>
+    <SolidColorBrush x:Key="UnderlineColor" Color="CadetBlue"/>
+    
+
+
+    <SolidColorBrush x:Key="KeyframeColor" Color="#FF02ABD3"/>
+    <SolidColorBrush x:Key="KeyframeSelectedColor" Color="#FFFFC3E2"/>
+    <SolidColorBrush x:Key="TangentColor" Color="#FF00FF00"/>
+    <SolidColorBrush x:Key="TangentSelectedColor" Color="#FFFFFF00"/>
+    <SolidColorBrush x:Key="CurvePointColor" Color="#FFFF0000"/>
+    <SolidColorBrush x:Key="CurvePointSelectedColor" Color="#FFFF00FF"/>
+    <SolidColorBrush x:Key="CurveStartPointColor" Color="#FF0000FF"/>
+</ResourceDictionary>

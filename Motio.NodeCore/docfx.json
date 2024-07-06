@@ -1,0 +1,91 @@
+{
+  "metadata": [
+    {
+      "src": [
+        {
+          "files": [
+            "Motio.Configuration/*.csproj",
+            "Motio.Boolean/*.csproj",
+            "Motio.FontTesselation/*.csproj",
+            "Motio.Geometry/*.csproj",
+            "Motio.Graphics/*.csproj",
+            "Motio.Meshing/*.csproj",
+            "Motio.NodeCore/*.csproj",
+            "Motio.NodeImpl/*.csproj",
+            "ObjectStoring/*.csproj",
+            "Motio.Selecting/*.csproj",
+            "Motio.UI/*.csproj",
+            "Motio.ComplexPath/*.csproj",
+            "Motio.Animation/*.csproj",
+            "Motio.NodeCommon/*.csproj",
+            "Motio.ClickLogic/*.csproj",
+            "Motio.Pathing/*.csproj",
+            "Poly2Tri/*.csproj"
+          ],
+          "cwd": "..",
+          "exclude": [
+            "**/obj/**",
+            "**/bin/**",
+            "_site/**"
+          ]
+        }
+      ],
+      "dest": "obj/api"
+    }
+  ],
+  "build": {
+    "content": [
+      {
+        "files": [
+          "api/**.yml"
+        ],
+        "cwd": "obj"
+      },
+      {
+        "files": [
+          "api/*.md",
+          "articles/**.md",
+          "examples/**.md",
+          "toc.yml",
+          "*.md"
+        ],
+        "exclude": [
+          "obj/**",
+          "_site/**"
+        ]
+      }
+    ],
+    "resource": [
+      {
+        "files": [
+          "images/**"
+        ],
+        "exclude": [
+          "obj/**",
+          "_site/**"
+        ]
+      }
+    ],
+    "overwrite": [
+      {
+        "files": [
+          "apidoc/**.md"
+        ],
+        "exclude": [
+          "obj/**",
+          "_site/**"
+        ]
+      }
+    ],
+    "globalMetadata": {
+      "_appTitle": "Motio documentation",
+      "_enableSearch": true,
+      "_appLogoPath": "images/logo.png",
+      "_appFaviconPath": "images/logo.png"
+    },
+    "dest": "_site",
+    "template": [
+      "default"
+    ]
+  }
+}

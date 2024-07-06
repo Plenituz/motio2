@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="Motio.UI.Views.TimelineDisplays.VectorTimelineDisplay"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Motio.UI.Views.TimelineDisplays"
+             xmlns:views="clr-namespace:Motio.UI.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <StackPanel>
+        <local:KeyframeTimelineCanvas x:Name="keyframeCanvasX" MouseDown="KeyframeCanvas_MouseDown" Height="20" Background="Transparent">
+            <TextBlock FontStyle="Italic"
+                       Panel.ZIndex="-1"
+                       IsHitTestVisible="False"
+                       Foreground="{DynamicResource PassiveTextColor}"
+                       Text="{Binding Name, StringFormat='{}{0}.X'}"/>
+
+            <local:KeyframeTimelineCanvas.IsEnabled>
+                <MultiBinding Converter="{StaticResource ExtractAndDisplayKeyframes}">
+                    <Binding />
+                    <Binding ElementName="keyframeCanvasX" Path="ActualWidth"/>
+                    <Binding Path="Root.KeyframePanel.Left"/>
+                    <Binding Path="Root.KeyframePanel.Right"/>
+                    <Binding ElementName="keyframeCanvasX"/>
+                    <Binding Path="KeyframeHolder"/>
+                    <Binding Path="Root.AnimationTimeline.MaxFrame"/>
+                </MultiBinding>
+            </local:KeyframeTimelineCanvas.IsEnabled>
+        </local:KeyframeTimelineCanvas>
+
+        <local:KeyframeTimelineCanvas x:Name="keyframeCanvasY" MouseDown="KeyframeCanvas_MouseDown" Height="20" Background="Transparent">
+            <TextBlock FontStyle="Italic"
+                       Panel.ZIndex="-1"
+                       IsHitTestVisible="False"
+                       Foreground="{DynamicResource PassiveTextColor}"
+                       Text="{Binding Name, StringFormat='{}{0}.Y'}"/>
+
+            <local:KeyframeTimelineCanvas.IsEnabled>
+                <MultiBinding Converter="{StaticResource ExtractAndDisplayKeyframes}">
+                    <Binding />
+                    <Binding ElementName="keyframeCanvasY" Path="ActualWidth"/>
+                    <Binding Path="Root.KeyframePanel.Left"/>
+                    <Binding Path="Root.KeyframePanel.Right"/>
+                    <Binding ElementName="keyframeCanvasY"/>
+                    <Binding Path="KeyframeHolderY"/>
+                    <Binding Path="Root.AnimationTimeline.MaxFrame"/>
+                </MultiBinding>
+            </local:KeyframeTimelineCanvas.IsEnabled>
+        </local:KeyframeTimelineCanvas>
+    </StackPanel>
+</UserControl>

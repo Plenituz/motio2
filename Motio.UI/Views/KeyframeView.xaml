@@ -1,0 +1,109 @@
+﻿<UserControl x:Class="Motio.UI.Views.KeyframeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Motio.UI.Views"
+             
+             Loaded="KeyframeView_Loaded"
+             
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    
+<!-- DataContext = MainControlViewModel -->
+    <DockPanel x:Name="dockPanel">
+        <Canvas x:Name="timeSliderCanvas" Panel.ZIndex="1" Background="Blue">
+            <Rectangle Fill="{DynamicResource PlayHeadColor}" 
+                       Width="2" 
+                       IsHitTestVisible="False"
+                       Height="{Binding Path=ActualHeight, ElementName=timeSliderCanvas}">
+                <Canvas.Left>
+                    <MultiBinding Converter="{StaticResource PositionPlayHeadOnCanvas}">
+                        <!--we give all thoses parameters as binding 
+                             so that if any of them changes, the play head is still in position-->
+
+                        <!-- TODO check if the following bindings work -->
+
+                        <!--<Binding Source="{x:Static vm:AnimationTimelineViewModel.Instance}"
+                                 Path="CurrentFrame"/>-->
+                        <Binding Path="AnimationTimeline.CurrentFrame"/>
+                        <Binding ElementName="dockPanel" Path="ActualWidth"/>
+                        <!--<Binding Source="{x:Static vm:MainWindowViewModel.Instance}" 
+                                 Path="LeftKeyframeView"/>-->
+                        <Binding Path="KeyframePanel.Left"/>
+                        <!--<Binding Source="{x:Static vm:MainWindowViewModel.Instance}" 
+                                 Path="RightKeyframeView"/>-->
+                        <Binding Path="KeyframePanel.Right"/>
+                        <!--<Binding Source="{x:Static vm:AnimationTimelineViewModel.Instance}" 
+                             Path="MaxFrame"/>-->
+                        <Binding Path="AnimationTimeline.MaxFrame"/>
+                    </MultiBinding>
+                </Canvas.Left>
+            </Rectangle>
+        </Canvas>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <Canvas x:Name="clickAndDragCanvas" Height="20"
+                    Background="{DynamicResource TimelineClickZoneColor}"
+                    MouseDown="clickAndDragCanvas_MouseDown"
+                    MouseMove="clickAndDragCanvas_MouseMove"
+                    MouseUp="clickAndDragCanvas_MouseUp">
+                <Canvas.IsEnabled>
+                    <MultiBinding Converter="{StaticResource ShowCacheData}">
+                        <Binding ElementName="clickAndDragCanvas"/>
+                        <!--<Binding Source="{x:Static vm:MainWindowViewModel.Instance}" 
+                                 Path="LeftKeyframeView"/>-->
+                        <Binding Path="KeyframePanel.Left"/>
+                        <!--<Binding Source="{x:Static vm:MainWindowViewModel.Instance}" 
+                                 Path="RightKeyframeView"/>-->
+                        <Binding Path="KeyframePanel.Right"/>
+                        <!--<Binding Source="{x:Static vm:AnimationTimelineViewModel.Instance}"
+                                 Path="MaxFrame"/>-->
+                        <Binding Path="AnimationTimeline.MaxFrame"/>
+                        <Binding ElementName="dockPanel"/>
+                        <Binding ElementName="dockPanel" Path="ActualWidth"/>
+                        <!--<Binding Path="AnimationTimeline.CacheUpdated"/>-->
+                    </MultiBinding>
+                </Canvas.IsEnabled>
+                <local:TimelineLimitsAdjuster x:Name="tlAdjuster"
+                                              Canvas.Top="10" 
+                                              Container="{Binding ElementName=dockPanel}">
+                    <local:TimelineLimitsAdjuster.IsEnabled>
+                        <MultiBinding Converter="{StaticResource PlaceTimelineLimitsAdjuster}">
+                            <Binding ElementName="tlAdjuster"/>
+                            <!--<Binding Source="{x:Static vm:MainWindowViewModel.Instance}" 
+                                 Path="LeftKeyframeView"/>-->
+                            <Binding ElementName="dockPanel" Path="DataContext.KeyframePanel.Left"/>
+                            <!--<Binding Source="{x:Static vm:MainWindowViewModel.Instance}" 
+                                 Path="RightKeyframeView"/>-->
+                            <Binding ElementName="dockPanel" Path="DataContext.KeyframePanel.Right"/>
+                            <!--<Binding Source="{x:Static vm:AnimationTimelineViewModel.Instance}"
+                                 Path="MaxFrame"/>-->
+                            <Binding ElementName="dockPanel" Path="DataContext.AnimationTimeline.MaxFrame"/>
+                            <Binding ElementName="dockPanel" Path="ActualWidth"/>
+                        </MultiBinding>
+                    </local:TimelineLimitsAdjuster.IsEnabled>
+                </local:TimelineLimitsAdjuster>
+            </Canvas>
+
+            <ItemsControl Grid.Row="1" ItemsSource="{Binding KeyframePanel.NodeInTimeline}">
+                <ItemsControl.ItemContainerStyle>
+                    <Style>
+                        <Setter Property="FrameworkElement.DataContext" Value="{Binding RelativeSource={RelativeSource Self}}"/>
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <local:GraphicsNodeInTimelineView/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+        </Grid>
+    </DockPanel>
+
+</UserControl>

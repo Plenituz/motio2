@@ -1,0 +1,54 @@
+﻿<Window x:Class="Motio2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Motio2"
+        xmlns:views="clr-namespace:Motio.UI.Views;assembly=Motio.UI"
+        xmlns:cmds="clr-namespace:Motio.UI;assembly=Motio.UI"
+        Background="{DynamicResource BackgroundColor}"
+        Loaded="MainWindow_Loaded"
+        KeyDown="MainWindow_KeyDown"
+        
+        mc:Ignorable="d"
+        Title="{Binding CurrentFile, StringFormat='{}{0}   Water Motion'}" Height="600" Width="1000">
+    <Window.CommandBindings>
+        <CommandBinding Command="cmds:CustomCommands.Save" CanExecute="Save_CanExecute" Executed="Save_Executed"/>
+        <CommandBinding Command="cmds:CustomCommands.Open" CanExecute="Open_CanExecute" Executed="Open_Executed"/>
+        <CommandBinding Command="cmds:CustomCommands.New" CanExecute="New_CanExecute" Executed="New_Executed"/>
+        <!--<CommandBinding Command="cmds:CustomCommands.SaveSelection" CanExecute="SaveSelection_CanExecute" Executed="SaveSelection_Executed"/>-->
+        <CommandBinding Command="cmds:CustomCommands.OpenConsole" CanExecute="OpenConsole_CanExecute" Executed="OpenConsole_Executed"/>
+        <CommandBinding Command="cmds:CustomCommands.NextFrame" CanExecute="NextFrame_CanExecute" Executed="NextFrame_Executed"/>
+        <CommandBinding Command="cmds:CustomCommands.PrevFrame" CanExecute="PrevFrame_CanExecute" Executed="PrevFrame_Executed"/>
+        <CommandBinding Command="cmds:CustomCommands.NewGraphicsNode" CanExecute="NewGraphicsNode_CanExecute" Executed="NewGraphicsNode_Executed"/>
+        <CommandBinding Command="cmds:CustomCommands.Undo" CanExecute="Undo_CanExecute" Executed="Undo_Executed"/>
+        <CommandBinding Command="cmds:CustomCommands.Redo" CanExecute="Redo_CanExecute" Executed="Redo_Executed"/>
+    </Window.CommandBindings>
+    <DockPanel>
+        <Menu x:Name="menuQuiDecaleTout" DockPanel.Dock="Top" Background="{DynamicResource DarkerBackgroundColor}" Foreground="White">
+            <MenuItem Header="File">
+                <MenuItem Header="New" Command="cmds:CustomCommands.New" Foreground="Black"/>
+                <MenuItem Header="Open" Command="cmds:CustomCommands.Open" Foreground="Black"/>
+                <MenuItem Header="Save" Command="cmds:CustomCommands.Save" Foreground="Black"/>
+                <MenuItem x:Name="ExportList" Header="Export" Foreground="Black">
+                </MenuItem>
+                <!--<MenuItem Header="Import">
+                    <MenuItem Header="AI, SVG, PDF" Click="ImportAI_Click"/>
+                </MenuItem>-->
+            </MenuItem>
+            <MenuItem Header="Edit">
+                <!--<MenuItem Header="Save Selection" Command="cmds:CustomCommands.SaveSelection"/>-->
+                <MenuItem Header="Configs" Click="Configs_Click" Foreground="Black"/>
+                <MenuItem Header="Text Editor" Click="PythonFile_Click" Foreground="Black"/>
+                <MenuItem Header="Clear Image Cache" Click="ClearImgs_Click" Foreground="Black"/>
+                <MenuItem Header="New Node" Command="cmds:CustomCommands.NewGraphicsNode" Foreground="Black"/>
+                <MenuItem Header="Undo" Command="cmds:CustomCommands.Undo" Foreground="Black"/>
+                <MenuItem Header="Redo" Command="cmds:CustomCommands.Redo" Foreground="Black"/>
+            </MenuItem>
+        </Menu>
+        <Grid x:Name="theRootOfAllEvil">
+            <views:MainControl/>
+        </Grid>
+    </DockPanel>
+
+</Window>

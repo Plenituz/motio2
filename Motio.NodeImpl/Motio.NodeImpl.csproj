@@ -1,0 +1,205 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{297C6DBF-3D1B-4030-AB3C-485C9AB592C6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Motio.NodeImpl</RootNamespace>
+    <AssemblyName>Motio.NodeImpl</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="IronPython, Version=2.7.8.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\IronPython.2.7.8\lib\net45\IronPython.dll</HintPath>
+    </Reference>
+    <Reference Include="IronPython.Modules, Version=2.7.8.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\IronPython.2.7.8\lib\net45\IronPython.Modules.dll</HintPath>
+    </Reference>
+    <Reference Include="IronPython.SQLite, Version=2.7.8.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\IronPython.2.7.8\lib\net45\IronPython.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="IronPython.Wpf, Version=2.7.8.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\IronPython.2.7.8\lib\net45\IronPython.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Dynamic, Version=1.2.0.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamicLanguageRuntime.1.2.1\lib\net45\Microsoft.Dynamic.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Scripting, Version=1.2.0.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamicLanguageRuntime.1.2.1\lib\net45\Microsoft.Scripting.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Scripting.Metadata, Version=1.2.0.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamicLanguageRuntime.1.2.1\lib\net45\Microsoft.Scripting.Metadata.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.CodeCoverage.Shim, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamicLanguageRuntime.1.2.1\lib\net45\Microsoft.VisualStudio.CodeCoverage.Shim.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PropertyChanged, Version=2.2.4.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
+      <HintPath>..\packages\PropertyChanged.Fody.2.2.4.0\lib\net452\PropertyChanged.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.4.0\lib\net461\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="GraphicsAffectingNodes\BakeTransformGraphicsNode.cs" />
+    <Compile Include="GraphicsAffectingNodes\BasicSquareGraphicsNode.cs" />
+    <Compile Include="GraphicsAffectingNodes\BooleanGraphicsNode.cs" />
+    <Compile Include="GraphicsAffectingNodes\ContextNodes\DuplicateGraphicsNode.cs" />
+    <Compile Include="GraphicsAffectingNodes\ContextNodes\TestContextAware.cs" />
+    <Compile Include="GraphicsAffectingNodes\CSharpGraphicsAffectingNodeBase.cs" />
+    <Compile Include="GraphicsAffectingNodes\DebugGraphicsNode.cs" />
+    <Compile Include="GraphicsAffectingNodes\EditGraphicsNode.cs" />
+    <Compile Include="GraphicsAffectingNodes\ImageGraphicsNode.cs" />
+    <Compile Include="GraphicsAffectingNodes\PathGraphicsNode.cs" />
+    <Compile Include="GraphicsAffectingNodes\PolygonGraphicsNode.cs" />
+    <Compile Include="GraphicsAffectingNodes\PyGraphicsAffectingNodeBase.cs" />
+    <Compile Include="GraphicsAffectingNodes\PythonGraphicsNode.cs" />
+    <Compile Include="GraphicsAffectingNodes\SolidGraphicsNode.cs" />
+    <Compile Include="GraphicsAffectingNodes\TextGraphicsNode.cs" />
+    <Compile Include="GraphicsAffectingNodes\TransformGraphicsNode.cs" />
+    <Compile Include="GraphicsAffectingNodes\VoxelizeGraphicsNode.cs" />
+    <Compile Include="NodeImplExtensions.cs" />
+    <Compile Include="NodePropertyTypes\BoolNodeProperty.cs" />
+    <Compile Include="NodePropertyTypes\ButtonNodeProperty.cs" />
+    <Compile Include="NodePropertyTypes\ColorNodeProperty.cs" />
+    <Compile Include="NodePropertyTypes\CurveNodeProperty.cs" />
+    <Compile Include="NodePropertyTypes\DeletablePropertyWrapper.cs" />
+    <Compile Include="NodePropertyTypes\FileNodeProperty.cs" />
+    <Compile Include="NodePropertyTypes\FloatNodeProperty.cs" />
+    <Compile Include="NodePropertyTypes\DropdownNodeProperty.cs" />
+    <Compile Include="NodePropertyTypes\IntNodeProperty.cs" />
+    <Compile Include="NodePropertyTypes\OrderNodeProperty.cs" />
+    <Compile Include="NodePropertyTypes\SeparatorNodeProperty.cs" />
+    <Compile Include="NodeTools\EditTool.cs" />
+    <Compile Include="NodeTools\PathCreatorTool.cs" />
+    <Compile Include="NodePropertyTypes\StringNodeProperty.cs" />
+    <Compile Include="NodePropertyTypes\Vector3NodeProperty.cs" />
+    <Compile Include="NodePropertyTypes\VectorNodeProperty.cs" />
+    <Compile Include="NodeScanner.cs" />
+    <Compile Include="NodeTools\MoveTool.cs" />
+    <Compile Include="NodeTools\PolygonCreatorTool.cs" />
+    <Compile Include="NodeTools\TestNodeTool.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PropertyAffectingNodes\AnimationPropertyNode.cs" />
+    <Compile Include="PropertyAffectingNodes\AnimationVector3PropertyNode.cs" />
+    <Compile Include="PropertyAffectingNodes\AnimationVectorPropertyNode.cs" />
+    <Compile Include="PropertyAffectingNodes\CopyPropertyNode.cs" />
+    <Compile Include="PropertyAffectingNodes\CSharpPropertyAffectingNodeBase.cs" />
+    <Compile Include="PropertyAffectingNodes\PyPropertyAffectingNodeBase.cs" />
+    <Compile Include="PropertyAffectingNodes\PythonPropertyNode.cs" />
+    <Compile Include="PropertyAffectingNodes\TestNode.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\clipper_library\clipper_library.csproj">
+      <Project>{9B062971-A88E-4A3D-B3C9-12B78D15FA66}</Project>
+      <Name>clipper_library</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Debuging\Motio.Debuging.csproj">
+      <Project>{7AD0D374-375B-40FD-845D-584C26DD7868}</Project>
+      <Name>Motio.Debuging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Motio.Animation\Motio.Animation.csproj">
+      <Project>{195634C0-2C0C-4831-A422-128E155BF6DA}</Project>
+      <Name>Motio.Animation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Motio.Boolean\Motio.Boolean.csproj">
+      <Project>{1CBFC6B8-5501-4D5F-8734-C3E448CD2865}</Project>
+      <Name>Motio.Boolean</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Motio.FontTesselation\Motio.FontTesselation.csproj">
+      <Project>{5AC0539D-36B9-4496-B2E7-2CB3EA7DFD39}</Project>
+      <Name>Motio.FontTesselation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Motio.Geometry\Motio.Geometry.csproj">
+      <Project>{6EAD4F4D-DBBC-4A4E-8AC2-29B319D3797E}</Project>
+      <Name>Motio.Geometry</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Motio.Graphics\Motio.Graphics.csproj">
+      <Project>{5AE1A397-B171-499E-B3DE-2DCB4030A741}</Project>
+      <Name>Motio.Graphics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Motio.Meshing\Motio.Meshing.csproj">
+      <Project>{9DE67E81-D2D9-40D9-9ECE-CE7DC0FF6AC2}</Project>
+      <Name>Motio.Meshing</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Motio.NodeCommon\Motio.NodeCommon.csproj">
+      <Project>{F4FBEAEE-CE5F-475C-9B07-5359C3235429}</Project>
+      <Name>Motio.NodeCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Motio.NodeCore\Motio.NodeCore.csproj">
+      <Project>{57BE1E04-9EA5-4983-B7EB-FFE6B2905EE0}</Project>
+      <Name>Motio.NodeCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Motio.Pathing\Motio.Pathing.csproj">
+      <Project>{465C39BB-046B-4958-94E7-BDDBE066DD28}</Project>
+      <Name>Motio.Pathing</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Motio.PythonRunning\Motio.PythonRunning.csproj">
+      <Project>{C93FAE68-3980-416F-9F61-57B080801031}</Project>
+      <Name>Motio.PythonRunning</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ObjectStoring\Motio.ObjectStoring.csproj">
+      <Project>{6109F5A5-86E0-4DDE-8C33-C9731F19D6AD}</Project>
+      <Name>Motio.ObjectStoring</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Poly2Tri\Poly2Tri.csproj">
+      <Project>{c5e5802d-6a45-4fe9-bae7-5f0ae91d72c1}</Project>
+      <Name>Poly2Tri</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Triangle\Triangle.csproj">
+      <Project>{f7907a0a-b75f-400b-9e78-bfad00db4d6b}</Project>
+      <Name>Triangle</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="FodyWeavers.xml" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Fody.2.2.1.0\build\net452\Fody.targets" Condition="Exists('..\packages\Fody.2.2.1.0\build\net452\Fody.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Fody.2.2.1.0\build\net452\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.2.2.1.0\build\net452\Fody.targets'))" />
+  </Target>
+</Project>

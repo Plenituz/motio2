@@ -1,0 +1,13 @@
+﻿{
+  "ignored": [],
+  "known": [
+    {
+      "path": "BuiltIn\\Q_Tools\\MoveToolViewModel.py",
+      "class_name": "MoveToolViewModel"
+    },
+    {
+      "path": "BuiltIn\\examples\\TestPyGraphics.py",
+      "class_name": "TestPyGraphics"
+    }
+  ]
+}

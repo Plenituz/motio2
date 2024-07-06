@@ -1,0 +1,39 @@
+﻿<UserControl x:Class="Motio.UI.Views.NodeButton2"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Motio.UI.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid x:Name="mGrid" MaxHeight="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+        <!--<Rectangle Fill="AliceBlue"
+                   VerticalAlignment="Stretch"
+                   Width="{Binding ElementName=UserGivenName, Path=ActualWidth}"/>-->
+        <Grid Grid.Row="0" Grid.Column="0">
+            <Path Fill="AliceBlue">
+                <Path.Data>
+                    <MultiBinding Converter="{StaticResource DynamicSizing}">
+                        <Binding ElementName="UserGivenName" Path="ActualWidth"/>
+                        <Binding ElementName="UserGivenName" Path="ActualHeight"/>
+                        <Binding Source="M0,0 H[[100%x-25]] V[[100%y]] H0"/>
+                    </MultiBinding>
+                </Path.Data>
+            </Path>
+        </Grid>
+
+        <TextBlock Grid.Row="0"  Grid.Column="0" Text="{Binding UserGivenName}"
+                x:Name="UserGivenName"
+                HorizontalAlignment="Center"
+                Padding="6 0 0 0" 
+                VerticalAlignment="Center"/>
+
+
+    </Grid>
+</UserControl>

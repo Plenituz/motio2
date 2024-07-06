@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="Motio.UI.Views.PropertyDisplays.DeletablePropertyDisplay"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Motio.UI.Views.PropertyDisplays"
+             xmlns:views="clr-namespace:Motio.UI.Views"
+             Loaded="UserControl_Loaded"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <StackPanel Orientation="Horizontal">
+        <Button Content="X" Click="Button_Click"/>
+        <ItemsControl ItemsSource="{Binding Path=Properties}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <!-- item template for each property -->
+                    <views:PropertyDisplay/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </StackPanel>
+</UserControl>

@@ -1,0 +1,19 @@
+﻿<Window x:Class="Motio.UI.Views.Dialogs.ConsoleDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Motio.UI.Views.Dialogs"
+        Initialized="Window_Initialized"
+             mc:Ignorable="d" 
+        Closing="Window_Closing"
+             d:DesignHeight="300" d:DesignWidth="300"
+             Width="500" Height="500">
+    <DockPanel>
+        <ScrollViewer x:Name="scroller"
+            HorizontalScrollBarVisibility="Auto" 
+            VerticalScrollBarVisibility="Auto">
+            <TextBox x:Name="consoleOut"/>
+        </ScrollViewer>
+    </DockPanel>
+</Window>

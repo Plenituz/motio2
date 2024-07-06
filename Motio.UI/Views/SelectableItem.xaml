@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="Motio.UI.Views.SelectableItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Motio.UI.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <StackPanel x:Name="stack" MouseDown="stack_MouseDown">
+        <StackPanel.Style>
+            <Style TargetType="StackPanel">
+                <Setter Property="Background" Value="{DynamicResource LighterBackgroundColor}"></Setter>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="{DynamicResource PassiveElementColor}" />
+                    </Trigger>
+
+                    <DataTrigger Binding="{Binding Selected}" Value="True">
+                        <Setter Property="Background" Value="{DynamicResource ActiveElementColor}" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </StackPanel.Style>
+
+        <ContentPresenter Content="{Binding InsideContent}"></ContentPresenter>
+    </StackPanel>
+</UserControl>

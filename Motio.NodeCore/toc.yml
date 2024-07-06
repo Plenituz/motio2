@@ -1,0 +1,13 @@
+- name: Home
+  href: index.md
+- name: Articles
+  href: articles/
+  homepage: articles/intro.md
+- name: API Documentation
+  href: obj/api/
+  homepage: api/index.md
+- name: Examples
+  href: examples/
+  homepage: examples/index.md
+- name: Report Bug
+  href: https://github.com/Plenituz/motio/issues/new
